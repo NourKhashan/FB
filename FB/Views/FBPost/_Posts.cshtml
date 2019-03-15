@@ -1,0 +1,48 @@
+﻿@model IEnumerable<FB.Models.FBPost>
+
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(pp => pp.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(pp => pp.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(pp => pp.Like)
+            </th>
+            <th>
+                @Html.DisplayNameFor(pp => pp.DisLike)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(pp => item.Id)
+                </td>
+                <td>
+
+                    @Html.DisplayFor(pp => item.Description)
+                </td>
+                <td>
+
+                    @Html.DisplayFor(pp => item.Like)
+                </td>
+                <td>
+                    @Html.DisplayFor(pp => item.DisLike)
+                </td>
+                <td>
+                    @Html.ActionLink("Add Comment", "AddComments", new { item.Id }, new { @class = "btn btn-info" }) |
+                    @Html.ActionLink("Delete Post", "Delete", new { item.Id }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

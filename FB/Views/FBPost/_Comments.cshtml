@@ -1,0 +1,11 @@
+﻿@model IEnumerable<FB.Models.Comment>
+
+
+
+@foreach (var item in Model)
+            {
+    <div class="row col-12">
+        @Html.DisplayFor(Co => item.Description)
+        <br />
+    </div>
+}

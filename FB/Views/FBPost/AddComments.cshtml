@@ -1,0 +1,92 @@
+﻿@model IEnumerable<FB.Models.Comment>
+@{
+    ViewBag.Title = "AddComments";
+    int x = ViewBag.Post.Id;
+}
+
+<h2>AddComments</h2>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+
+    <div class="text-center">
+        <div>
+@using (Ajax.BeginForm("AddComments", new { id = x }, new AjaxOptions
+    {
+    HttpMethod = "post",
+        UpdateTargetId = "Comments",
+        InsertionMode = InsertionMode.Replace
+    }))
+    
+{
+        <div class="row col-12">
+            @Html.Label("PostDesc", (string)ViewBag.Post.Description)
+            @*@Html.HiddenFor(pp => x)*@
+
+        </div>
+        <br />
+
+        <div class="row">
+            @Html.Editor("Description")
+
+        </div>
+        <div class="row">
+            <span class="col-4">
+                @Ajax.ActionLink("Like", "Like", new { id = x }, new AjaxOptions
+           {
+               UpdateTargetId = "Like",
+               InsertionMode = InsertionMode.Replace
+           }, new { @class = "fa fa-thumbs-up" })
+                <span id="Like">@ViewBag.Post.Like</span>
+            </span>
+            <span class="col-offset-1 col-4 ">
+
+                @Ajax.ActionLink("DisLike", "DisLike", new { id = x }, new AjaxOptions
+           {
+               UpdateTargetId = "DisLike",
+               InsertionMode = InsertionMode.Replace
+           }, new { @class = "fa fa-thumbs-down" })
+                <span id="DisLike">@ViewBag.Post.DisLike</span>
+            </span>
+        </div>
+        <br />
+
+        <div class="row">
+            <input type="submit" value="Add" class="btn btn-primary" />
+            @*@Ajax.ActionLink("Add", "AddComments", new { id = x }, new AjaxOptions
+        {
+            UpdateTargetId = "Comments",
+            InsertionMode = InsertionMode.Replace
+        }, new { @class = "btn btn-primary" })*@
+        </div>
+}
+            </div>
+        <br />
+        <div id="Comments">
+            @foreach (var item in Model)
+            {
+                <div class="row col-12">
+                    @Html.DisplayFor(Co => item.Description)
+                    <br />
+                </div>
+            }
+        </div>
+
+
+
+    </div>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+@section scripts{
+    
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        function getCommentDescription() {
+            return document.getElementById("Description").value;
+        }
+    </script>
+
+    }
